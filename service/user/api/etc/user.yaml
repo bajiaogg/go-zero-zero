@@ -1,0 +1,24 @@
+Name: User
+Host: 0.0.0.0
+Port: 5001
+Mode: dev
+
+JwtAuth:
+  AccessSecret: 7776bfac-f411-4435-90e2-92c425119e66
+
+#WxMiniConf
+WxMiniConf:
+  AppId: wx2add729fadddddd
+  Secret: 20365395b3de9b2a9351ddddddd
+
+#rpc service
+UserRpcConf:
+  Endpoints:
+    - 127.0.0.1:5501
+  NonBlock: true
+
+Log:
+  ServiceName: User
+  Mode: console
+  Encoding: plain
+  Level: info

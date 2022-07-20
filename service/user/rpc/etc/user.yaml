@@ -1,0 +1,28 @@
+Name: user.rpc
+ListenOn: 127.0.0.1:5501
+Etcd:
+  Hosts:
+    - 127.0.0.1:2379
+  Key: user.rpc
+
+MySql:
+  DataSource: root:rootroot@tcp(127.0.0.1:3306)/zero_user?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+#jwtAuth
+JwtAuth:
+  AccessSecret: 7776bfac-f411-4435-90e2-92c425119e66
+  AccessExpire: 31536000
+
+Redis:
+  Host: 127.0.0.1:6379
+  Type: node
+  Pass: abcabc
+
+Cache:
+  - Host: 127.0.0.1:6379
+    Pass: abcabc
+Log:
+  ServiceName: user.rpc
+  Mode: console
+  Encoding: plain
+  Level: info

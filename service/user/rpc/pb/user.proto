@@ -1,0 +1,135 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "./pb";
+
+message User {
+  int64 id = 1;
+  string mobile = 2;
+  string nickname = 3;
+  string avatar = 4;
+}
+
+// 注册
+message RegisterReq {
+  string Mobile = 1;
+  string Password = 2;
+  int64 RegMode = 3;
+  string Name = 4;
+}
+
+message RegisterResp{
+  string accessToken = 1;
+  int64  accessExpire = 2;
+  int64  refreshAfter = 3;
+}
+
+// 登录
+message LoginReq {
+  int64 AuthType = 1;
+  string AuthKey = 2;
+  string AuthValue = 3;
+}
+
+message LoginResp{
+  string accessToken = 1;
+  int64  accessExpire = 2;
+  int64  refreshAfter = 3;
+}
+
+// 获取单个用户id
+message GetSingleUserInfoReq {
+  int64  id = 1;
+}
+message GetSingleUserInfoResp {
+  User User = 1;
+}
+
+// 获取多个用户的信息,适用于列表
+message GetMultipleUserInfoReq{
+  repeated int64 Uid = 1;
+}
+
+message GetMultipleUserInfoResp {
+  repeated User User = 1;
+}
+
+// 地址
+message Address {
+  int64 Id = 1;
+  string Name = 2;
+  string Mobile = 3;
+  string Province = 4;
+  string City = 5;
+  string Dist = 6;
+  string Address = 7;
+  int64 IsDefault = 8;
+}
+
+message CreateAddressReq{
+  string Name = 1;
+  string Mobile = 2;
+  string Province = 3;
+  string City = 4;
+  string Dist = 5;
+  string Address = 6;
+  int64 IsDefault = 7;
+}
+
+message UpdateAddressReq {
+  int64 Id = 1;
+  string Name = 2;
+  string Mobile = 3;
+  string Province = 4;
+  string City = 5;
+  string Dist = 6;
+  string Address = 7;
+  int64 IsDefault = 8;
+}
+
+message SaveAddressResp {
+  Address Address = 1;
+}
+
+message DeleteAddressReq{
+  int64 Id = 1;
+}
+
+message DeleteAddressResp {
+  string Msg = 1;
+}
+
+message GetAddressListReq {
+  string Uid = 1;
+}
+message GetAddressListResp {
+  repeated Address list = 1;
+}
+
+message GenerateTokenReq {
+  int64 userId = 1;
+}
+message GenerateTokenResp {
+  string accessToken = 1;
+  int64  accessExpire = 2;
+  int64  refreshAfter = 3;
+}
+
+
+service UserRpc {
+  // 用户模块
+  // 注册
+  rpc Register(RegisterReq) returns (RegisterResp);
+  rpc Login(LoginReq) returns (LoginResp);
+  rpc UserInfo(GetSingleUserInfoReq) returns(GetSingleUserInfoResp);
+  rpc MultipleUserInfo(GetMultipleUserInfoReq) returns(GetMultipleUserInfoResp);
+
+  rpc generateToken(GenerateTokenReq) returns(GenerateTokenResp);
+
+  // 地址
+  rpc CreateAddress(CreateAddressReq) returns(SaveAddressResp);
+  rpc UpdateAddress(UpdateAddressReq) returns(SaveAddressResp);
+  rpc DeleteAddress(DeleteAddressReq) returns(DeleteAddressResp);
+  rpc AddressList(GetAddressListReq) returns(GetAddressListResp);
+}

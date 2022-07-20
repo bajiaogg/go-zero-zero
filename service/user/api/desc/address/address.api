@@ -1,0 +1,54 @@
+syntax = "v1"
+
+
+type Address {
+    Id int64 `json:"id"`
+    Province string `json:"province"`
+    City string `json:"city"`
+    Dist string `json:"dist"`
+    Address string `json:"address"`
+    IsDefault int8 `json:"isDefault"`
+}
+type (
+    AddressListReq {
+        Current int64 `json:"current,optional,default=1"`
+        PageSize int64 `json:"pageSize,optional,default=20"`
+    }
+    AddressListResp {
+        List []Address `json:"list"`
+    }
+
+    UpdateReq {
+        Id int64 `path:"id"`
+        Province string `json:"province"`
+        City string `json:"city"`
+        Dist string `json:"dist"`
+        Address string `json:"address"`
+        IsDefault int8 `json:"isDefault"`
+    }
+    UpdateResp {
+    }
+
+    DeleteReq {
+        Id int64 `path:"id"`
+    }
+
+    DeleteResp {
+    }
+)
+
+@server(
+    jwt: JwtAuth
+    prefix: address/v1
+    group: address
+)
+
+service User {
+    @doc "获取地址列表"
+    @handler AddressList
+    post /list (AddressListReq) returns (AddressListResp)
+
+    @doc "更新地址"
+    @handler Update
+    post /:id/update (UpdateReq) returns (UpdateResp)
+}

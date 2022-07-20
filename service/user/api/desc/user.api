@@ -1,0 +1,38 @@
+syntax = "v1"
+
+info(
+	title: "用户服务"
+	desc: "用户服务"
+	author: "bajiao"
+	email: "job@ainiok.com"
+	version: "v1"
+)
+
+import "user/user.api"
+
+@server(
+	prefix: user/v1
+	group: user
+)
+
+service User {
+	@doc "register"
+	@handler register
+	post /user/register (RegisterReq) returns (RegisterResp)
+	
+	@doc "login"
+	@handler login
+	post /user/login (LoginReq) returns (LoginResp)
+}
+
+@server(
+	prefix: user/v1
+	group: user
+	jwt: JwtAuth
+)
+
+service User {
+	@doc "根据uid获取用户信息"
+	@handler getUserInfo
+	post /u/:uid (UserInfoReq) returns (UserInfoResp)
+}
